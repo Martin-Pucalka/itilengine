@@ -1,0 +1,128 @@
+div(style="width:100%;")#serviceWorkflowDiv
+        div(style="width:100%;")
+            div#serviceWorkflowContainer
+            input.form-control(name='serviceWf', type="hidden", value='#{serviceWf}')#serviceWf
+            div#stateContainer
+                each state,i in statesOfService
+                    table(id='#{state.stateid}').state
+                        tbody
+                            tr
+                                td
+                                    input.form-control(name='state_id', type="hidden", value='#{state._id}').state_id
+                            tr
+                                td
+                                    input.form-control(name='stateid', type="hidden", value="#{state.stateid}").stateid
+                            tr
+                                td(colspan="2")
+                                    h5(style="font-weight:bold").type #{state.type}
+                            tr.stateProperty
+                                td
+                                    input(type="submit", value='Commands', onclick="ServiceWorkflow.commandsOfState(this.parentNode.parentNode.parentNode.parentNode)").btn.btn-primary.btn-sm
+                            tr.stateProperty
+                                td 
+                                    strong
+                                        d Subject
+                                td
+                                    input.input-sm.form-control(name='subject', value="#{state.subject}", onblur="ServiceWorkflow.updateState(this.parentNode.parentNode.parentNode.parentNode, []);", size="40").subject
+                            tr.stateProperty.ticketProperty
+                                td(style="vertical-align: top;") 
+                                    strong
+                                        d Description
+                                td
+                                    textarea.input-sm.form-control(name='description', cols="40", maxlength="200", rows="4", style="resize:none", onblur="ServiceWorkflow.updateState(this.parentNode.parentNode.parentNode.parentNode, [])").description
+                                        | #{state.description}
+                            tr.stateProperty.ticketProperty
+                                td 
+                                    strong 
+                                        d Priority
+                                td
+                                    input.form-control(name='priority', value="#{state.priority}", type="range", min="1", max="5", onblur="ServiceWorkflow.updateState(this.parentNode.parentNode.parentNode.parentNode, [])").priority
+                            tr.stateProperty.ticketProperty
+                                td(colspan="2")
+                                    label
+                                        input(type='checkbox', name='isBlocking', value='isBlocking', checked=(state.isBlocking===true ? "checked" : undefined), onchange="ServiceWorkflow.updateState(this.parentNode.parentNode.parentNode.parentNode.parentNode)", title="If state is blocking, workflow will be stopped, until player solves the ticket.").isBlocking
+                                        |  Is blocking
+                            tr.stateProperty.ticketProperty.incidentProperty
+                                td(colspan="2")
+                                    label
+                                        input(type='checkbox', name='bringDown', value='bringDown', checked=(state.bringDown===true ? "checked" : undefined), onchange="ServiceWorkflow.updateState(this.parentNode.parentNode.parentNode.parentNode.parentNode)").bringDown
+                                        |  Bring down service
+                            tr.stateProperty.ticketProperty
+                                td 
+                                    strong
+                                        d Solutions
+                            tr.stateProperty.ticketProperty
+                                td(colspan="2")
+                                    div.solutionContainer
+                                        each sol, i in state.sols
+                                            table(id="#{sol._id}", class=(sol.isIgnore===true ? 'hidden' : ''))
+                                                tbody
+                                                    tr
+                                                        td
+                                                            input.form-control.input-sm(name='description', value="#{sol.description}" onblur="ServiceWorkflow.updateSolution(this.parentNode.parentNode.parentNode.parentNode, false, null)",).description
+                                                        td
+                                                            input(type="submit", value='Commands', onclick="ServiceWorkflow.commandsOfSolution(this.parentNode.parentNode.parentNode.parentNode)", style="margin-right:5px;margin-left:5px;").btn.btn-primary.btn-sm
+                                                        td
+                                                            a(href='#', onclick="ServiceWorkflow.removeSolution(this.parentNode.parentNode.parentNode.parentNode);").btn.btn-default.btn-sm Remove
+                            tr.stateProperty.ticketProperty
+                                td
+                                    input(value='Add', type="submit", onclick="ServiceWorkflow.addSolution(this.parentNode.parentNode.parentNode.parentNode);").btn.btn-default.btn-sm
+
+                each edge, i in edgesOfService
+                    table(id='#{edge.edgeid}').state.edge
+                        tbody
+                            tr
+                                td
+                                    input.form-control(name='edge_id', type="hidden", value="#{edge._id}").edge_id
+                            tr
+                                td
+                                    input.form-control(name='edgeid', type="hidden", value="#{edge.edgeid}").edgeid
+                            tr
+                                td
+                                    d(name='type', type="hidden").typeValue #{edge.type}
+                            tr
+                                td
+                                    input.form-control(name='type', type="hidden", value="").edgeError
+                            tr
+                                td(colspan="2")
+                                    button(onclick="ServiceWorkflow.edgeTypeChanged(this.parentNode.parentNode.parentNode.parentNode, this)", class="#{edge.type == 'Time' ? 'btn-default edgeTypeBtn timeBtn btn-primary' : 'btn-default edgeTypeBtn timeBtn'}").btn.edgeTypeBtn.timeBtn Time
+                                    button(onclick="ServiceWorkflow.edgeTypeChanged(this.parentNode.parentNode.parentNode.parentNode, this)", class="#{edge.type == 'Random' ? 'btn-default edgeTypeBtn randomBtn btn-primary' : 'btn-default edgeTypeBtn randomBtn'}").btn.edgeTypeBtn.randomBtn Random
+                                    button(onclick="ServiceWorkflow.edgeTypeChanged(this.parentNode.parentNode.parentNode.parentNode, this)", class="#{edge.type == 'Condition' ? 'btn-default edgeTypeBtn conditionBtn btn-primary' : 'btn-default edgeTypeBtn conditionBtn'}").btn.edgeTypeBtn.conditionBtn Condition
+                            tr(style="#{edge.type == 'Time' ? '' : 'display: none;'}").edgeProperty.numberOfHours
+                                td
+                                    div
+                                        strong
+                                            d Hours
+                                    input.form-control.input-sm(name='numberOfHours', onblur="ServiceWorkflow.updateEdge(this.parentNode.parentNode.parentNode.parentNode)", type="number", value="#{edge.numberOfHours}").numberOfHoursValue
+                            tr(style="#{edge.type == 'Random' ? '' : 'display: none;'}").edgeProperty.probability
+                                td
+                                    div
+                                        strong
+                                            d Probability (weight: 1 - n)
+                                    input.form-control.input-sm(name='probability', onblur="ServiceWorkflow.updateEdge(this.parentNode.parentNode.parentNode.parentNode)", type="number", value="#{edge.probability}").probabilityValue
+                            tr(style="#{edge.type == 'Condition' ? '' : 'display: none;'}").edgeProperty.condition
+                                td
+                                    div
+                                        button(onclick="ServiceWorkflow.ifElseChanged(this.parentNode.parentNode.parentNode.parentNode.parentNode, this)", class="#{edge.isIfEdge == true ? 'btn btn-default ifElseBtn ifBtn btn-info' : 'btn btn-default ifElseBtn ifBtn'}") if
+                                        button(onclick="ServiceWorkflow.ifElseChanged(this.parentNode.parentNode.parentNode.parentNode.parentNode, this)", class="#{edge.isIfEdge == false ? 'btn btn-default ifElseBtn elseBtn btn-info' : 'btn btn-default ifElseBtn elseBtn'}") else
+                                    if edge.isIfEdge
+                                        div.conditionStatement
+                                            strong
+                                                d Condition
+                                        div.conditionStatement
+                                            input.form-control.input-sm(name='condition', onblur="ServiceWorkflow.updateEdge(this.parentNode.parentNode.parentNode.parentNode.parentNode)", value="#{edge.condition}", ondrop="Utils.drop(event); ServiceWorkflow.updateEdge(this.parentNode.parentNode.parentNode.parentNode.parentNode);", ondragover="Utils.allowDrop(event)", size="50").conditionValue
+                                    else
+                                        div(style="display: none;").conditionStatement
+                                            strong
+                                                d Condition
+                                        div(style="display: none;").conditionStatement
+                                            input.form-control.input-sm(name='condition', onblur="ServiceWorkflow.updateEdge(this.parentNode.parentNode.parentNode.parentNode.parentNode)", value="#{edge.condition}", ondrop="Utils.drop(event); ServiceWorkflow.updateEdge(this.parentNode.parentNode.parentNode.parentNode.parentNode);", ondragover="Utils.allowDrop(event)" , size="50").conditionValue
+
+                div(style="display: none", title="Drag and drop attributes to condition")#availableAttributesForCondition.state.edge
+        div
+            button(type="button", onclick="ServiceWorkflow.addState('Event')").btn.btn-default.btn-sm Add event
+            button(type="button", onclick="ServiceWorkflow.addState('Incident')", style="margin-left: 5px;").btn.btn-default.btn-sm Add incident
+            button(type="button", onclick="ServiceWorkflow.addState('Change request')", style="margin-left: 5px;").btn.btn-default.btn-sm Add change request
+            button(type="button", onclick="ServiceWorkflow.addState('State')", style="margin-left: 5px;").btn.btn-default.btn-sm Add state
+
+include serviceWorkflowTables   

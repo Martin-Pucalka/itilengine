@@ -1,0 +1,312 @@
+body {
+    background-color: #eee;
+    padding-top: 70px;
+}
+
+.form-signin {
+    max-width: 330px;
+    margin: 0 auto;
+}
+
+.form-signin .form-signin-heading, .form-signin .checkbox {
+    margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+    font-weight: normal;
+}
+
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+} */
+
+#serviceInfrastructureWorkflowContainer {
+    border: 1px solid black;
+    height: 550px;
+    overflow: auto;
+}
+
+#serviceWorkflowContainer {
+    border: 1px solid black;
+    height: 550px;
+    overflow: auto;
+    border-radius: 4px;
+}
+
+#cicontainer {
+    /* float: left; */
+    display: inline-block;
+    vertical-align: top;
+    /* here */
+    width: 26.5%;
+    height: 40%;
+    word-wrap: break-word;
+    margin-left: 0.5%;
+}
+
+.table-borderless>tbody>tr>td, .table-borderless>tbody>tr>th, .table-borderless>tfoot>tr>td, .table-borderless>tfoot>tr>th, .table-borderless>thead>tr>td, .table-borderless>thead>tr>th {
+    border: none;
+}
+
+#ciheader {
+    /* float: left; */
+    display: inline-block;
+    vertical-align: top;
+    /* here */
+    width: 46%;
+}
+
+#serviceTable {
+    display: inline-block;
+    vertical-align: top;
+    /* here */
+    /* float: left; */
+    width: 26.8%;
+    margin-right: 0.2%;
+    min-width: 200px;
+    background-color: white;
+    border-radius: 4px;
+    border-style: groove;
+    border-width: 1px;
+    border-color: gray;
+    padding: 4px;
+}
+
+#serviceWorkflowContainer {
+    /* float: left; */
+    vertical-align: top;
+    /* here */
+    display: inline-block;
+    width: 73%;
+}
+
+#serviceLabelHeadline {
+    margin-top: -0px;
+    vertical-align: top;
+    /* here */
+    display: inline-block;
+}
+
+#publishBtn {
+    margin-right: 30px;
+}
+
+#infSwitch {
+    float: right;
+    /* here */
+}
+
+.status {
+    width: 60px;
+}
+
+.state {
+    border-radius: 4px;
+    border-style: groove;
+    padding: 2%;
+    border-width: 1px;
+    font-size: 13px;
+    background-color: white;
+}
+
+#stateContainer {
+    /* float: left; */
+    display: inline-block;
+    width: 26.5%;
+    margin-left: 0.5%;
+}
+
+#serviceDesk {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: white;
+    width: 27%;
+    height: 48%;
+    border-style: groove;
+    border-width: 1px;
+    border-color: gray;
+}
+
+.change-link {
+    background-color: #000;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    bottom: 0;
+    color: #fff;
+    opacity: 0.8;
+    padding: 4px;
+    position: absolute;
+    text-align: center;
+    width: 150px;
+}
+
+.change-link:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.hide-toolbar .ql-toolbar {
+    display: none;
+}
+
+.edgeTypeBtn {
+    margin-right: 5px;
+}
+
+.typeValue {
+    display: none;
+}
+
+.table-condensed.attsTable {
+    font-size: 13px;
+}
+
+#availableAttributesForCondition {
+    border-color: gray;
+    margin-top: 5px;
+}
+
+.ifElseBtn {
+    margin: 2.5px;
+}
+
+.ci {
+    background: white;
+    padding: 5px;
+    margin-top: 5px;
+    background-color: white;
+    border-radius: 4px;
+    border-style: groove;
+    border-width: 1px;
+    border-color: gray;
+}
+
+.table-condensed.ci.attsTable {
+    border-radius: 4px;
+    border-style: groove;
+    padding: 1%;
+    border-width: 1px;
+}
+
+.commandInput {
+    width: 500px;
+}
+
+.navbar {
+    padding-right: 20px;
+}
+
+.rounded {
+    border-radius: 4px;
+}
+
+.in-progress {
+    text-shadow: none;
+    background: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.6) 75%, transparent 75%, transparent), -webkit-linear-gradient(top, #f6f5f0, #e1e0dc);
+    background: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.6) 75%, transparent 75%, transparent), -moz-linear-gradient(top, #f6f5f0, #e1e0dc);
+    background: -ms-linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.6) 75%, transparent 75%, transparent), -ms-linear-gradient(top, #f6f5f0, #e1e0dc);
+    background: -o-linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.6) 75%, transparent 75%, transparent), -o-linear-gradient(top, #f6f5f0, #e1e0dc);
+    background: linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.6) 75%, transparent 75%, transparent), linear-gradient(top, #f6f5f0, #e1e0dc);
+    -pie-background: linear-gradient(-45deg, rgba(255, 255, 255, 0.6) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.6) 50%, rgba(255, 255, 255, 0.6) 75%, transparent 75%, transparent), linear-gradient(top, #f6f5f0, #e1e0dc);
+    background-repeat: repeat;
+    -webkit-background-size: 40px 40px, 100% 100%;
+    -moz-background-size: 40px 40px, 100% 100%;
+    -ms-background-size: 40px 40px, 100% 100%;
+    -o-background-size: 40px 40px, 100% 100%;
+    background-size: 40px 40px, 100% 100%;
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -moz-animation: progress-bar-stripes 2s linear infinite;
+    -ms-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}
+
+@-webkit-keyframes progress-bar-stripes {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 40px 0;
+    }
+}
+
+@-moz-keyframes progress-bar-stripes {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 40px 0;
+    }
+}
+
+@keyframes progress-bar-stripes {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 40px 0;
+    }
+}
+
+h3 {
+    font-weight: bold;
+}
+
+.input {
+    padding: 3px;
+    width: 100%;
+}
+
+ui-dialog-titlebar-create {
+    background: red;
+}
+
+.btn-google-plus {
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #d34332;
+    *background-color: #c53727;
+    background-image: -moz-linear-gradient(top, #dd4b39, #c53727);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#dd4b39), to(#c53727));
+    background-image: -webkit-linear-gradient(top, #dd4b39, #c53727);
+    background-image: -o-linear-gradient(top, #dd4b39, #c53727);
+    background-image: linear-gradient(to bottom, #dd4b39, #c53727);
+    background-repeat: repeat-x;
+    border-color: #c53727 #c53727 #85251a;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffdd4b39', endColorstr='#ffc53727', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+.btn-google-plus:hover, .btn-google-plus:focus, .btn-google-plus:active, .btn-google-plus.active, .btn-google-plus.disabled, .btn-google-plus[disabled] {
+    color: #ffffff;
+    background-color: #c53727;
+    *background-color: #b03123;
+}
+
+.btn-google-plus:active, .btn-google-plus.active {
+    background-color: #9a2b1f \9;
+}

@@ -1,0 +1,74 @@
+table(style="display: none")#attributeTableOfCi
+    tbody
+        tr
+            td
+                input.input-sm.form-control(name='name', onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)").name
+            td
+                input.input-sm.form-control(name='initValue', type="number", onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)").initValue
+            td 
+                input.input-sm.form-control(name='unit', onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)").unit
+            td
+                a(href='#', onclick="ServiceInfrastructure.removeAttribute(this.parentNode.parentNode);").btn.btn-default.btn-sm Remove
+
+table(style="display: none")#attributeTableOfService
+    tbody
+        tr
+            td
+                input.input-sm.form-control(name='name', onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)").name
+            td
+                input.input-sm.form-control(name='initValue', type="number", onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)").initValue
+            td 
+                input.input-sm.form-control(name='unit', onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)").unit
+            td
+                a(href='#', onclick="ServiceInfrastructure.removeAttribute(this.parentNode.parentNode);").btn.btn-default.btn-sm Remove
+
+
+table(style="display: none")#citable.ci.table.table-condensed.attsTable.table-borderless
+    tbody
+        tr(style="display: none")
+            td
+                input.form-control(name='ci_id', type="hidden").ci_id
+        tr(style="display: none")
+            td
+                input.form-control(name='ciid', type="hidden").ciid
+        tr
+            td
+                strong
+                    d Name
+            td(colspan="2")
+                input.input-sm.form-control(name='ciLabel', onblur="ServiceInfrastructure.updateCi(this.parentNode.parentNode.parentNode)").ciLabel
+        tr
+            td
+                strong
+                    d Description
+            td(colspan="2")
+                textarea#description.form-control.input-sm(name="ciDescription", cols="40", rows="5", maxlength="200", onblur="ServiceInfrastructure.updateCi(this.parentNode.parentNode.parentNode)", style="resize:none").ciDescription
+        tr
+            td
+                strong
+                    d Icon
+            td
+                form
+                    table
+                        tr
+                            td
+                                input#csv(name='csv', type='file', onchange="ServiceInfrastructure.previewFile(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode)").fileinput
+                        td
+                            img(height="200", alt="Image", style="max-width: 50px;max-height: 50px;").icon
+        tr
+            td(colspan="3")
+                strong
+                    p Attributes
+                table.table.table-condensed.attsTable.table-borderless
+                    thead
+                        tr
+                            th.col-xs-6 Name 
+                            th.col-xs-3 Init Value
+                            th.col-xs-2 Unit
+                            th.col-xs-1  
+                    tbody.attributeContainer
+                input.input-sm(value='Add', type="submit", onclick="ServiceInfrastructure.addAttributeToCi(this.parentNode.parentNode.parentNode.parentNode);").btn.btn-default.btn-sm
+        
+d#additionalInfoContent(style="display: none") #{service.additionalInfo}
+#additionalInfoForm(title='Detail information')
+    div(style="height: 400px;")#quillContainer

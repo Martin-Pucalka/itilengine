@@ -1,0 +1,119 @@
+extends ../index/layout
+
+block content
+    link(rel='stylesheet', type='text/css', href='https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css')
+    script(type='text/javascript', charset='utf8', src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js')
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    script(src="http://momentjs.com/downloads/moment.min.js")
+    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    script(type="text/javascript", src="/javascripts/ServiceDesk.js")
+    script(type="text/javascript", src="/javascripts/ServiceDeskTable.js")
+    script(src='/socket.io/socket.io.js')         
+    script.
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            ServiceDesk.init();
+            ServiceDeskTable.init();
+        });
+        var user = !{JSON.stringify(user)}
+
+
+    h3 Service Desk
+
+    table#ticketTable
+        thead
+            tr
+                th(style="display: none")  game._id
+                th  Game
+                th  Service
+                th  Time
+                th  Type
+                th  Subject
+                th  Description
+                th  Priority
+                th
+                th  Status
+                th(style="display: none")   ticket.selectedSolution
+                th(style="display: none")   ticket.solved
+                th(style="display: none")   ticket.state.solutions
+        tbody#ticketTableBody
+            each game, i in games
+                each ticket in game.tickets
+                    tr(id="#{ticket._id}")
+                        td(style="display: none")
+                            d.game_id #{game._id}
+                        td
+                            d.gameVersion #{game.service.version}
+                        td
+                            d.serviceLabel #{game.service.label}
+                        td
+                            d.created #{moment(ticket.created).format("YYYY-MM-DD HH:mm:ss")}
+                        td
+                            d.type #{ticket.state.type}
+                        td
+                            d.subject #{ticket.state.subject}
+                        td
+                            d.description #{ticket.state.description}
+                        td
+                            d.priority #{ticket.state.priority}
+                        td
+                            if ticket.state.isBlocking
+                                d(title="Solve this ticket to continue in game.").isBlocking !
+                        td
+                            if ticket.status == "solved"
+                                a(href="javascript:void(0);", onclick="ServiceDeskTable.showTicketDialog(this.parentNode.parentNode)", style="width: 100%").status.btn.btn-primary.btn-xs #{ticket.status}
+                            else
+                                a(href="javascript:void(0);", onclick="ServiceDeskTable.showTicketDialog(this.parentNode.parentNode)", style="width: 100%").status.btn.btn-warning.btn-xs #{ticket.status}
+                        td(style="display: none")
+                            d.selectedSolution #{ticket.selectedSolution}
+                        td(style="display: none")
+                            d.solved #{moment(ticket.solved).format("YYYY-MM-DD HH:mm:ss")}
+                        td(style="display: none")
+                            div.solutions
+                                each sol in ticket.state.solutions
+                                    div
+                                        button(id="#{sol._id}", type="button").btn.btn-default #{sol.description}
+    include ticketDetail   
+
+    table(style="display: none")
+        thead
+            th(style="display: none")  game._id
+            th  Game
+            th  Service
+            th  Time
+            th  Type
+            th  Subject
+            th  Description
+            th  Priority
+            th
+            th  Status
+            th(style="display: none")   ticket.selectedSolution
+            th(style="display: none")   ticket.solved
+            th(style="display: none")  ticket.state.solutions
+        tbody
+            tr(style="display: none")#ticketRow
+                td(style="display: none")
+                    d.game_id
+                td
+                    d.gameVersion
+                td
+                    d.serviceLabel
+                td
+                    d.created
+                td
+                    d.type
+                td
+                    d.subject
+                td
+                    d.description 
+                td
+                    d.priority
+                td
+                    d.isBlocking
+                td
+                    a(href="javascript:void(0);", onclick="ServiceDeskTable.showTicketDialog(this.parentNode.parentNode)").status
+                td(style="display: none")
+                    d.selectedSolution
+                td(style="display: none")
+                    d.solved
+                td(style="display: none")
+                    div.solutions

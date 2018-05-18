@@ -1,0 +1,73 @@
+extends ../index/layout
+
+block content
+    script(src="https://code.jquery.com/jquery-1.12.4.js")
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    script(src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js")
+    link(rel='stylesheet', href='https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css')
+    script(type="text/javascript", src="/javascripts/ListAvailableServices.js")
+    script(src='https://cdn.quilljs.com/1.0.0/quill.js')
+    link(href='https://cdn.quilljs.com/1.0.0/quill.snow.css', rel='stylesheet')
+    script(type="text/javascript" src="/javascripts/Utils.js")
+    script(type='text/javascript', charset='utf8', src='http://momentjs.com/downloads/moment.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/moment-duration-format/1.3.0/moment-duration-format.min.js')
+
+    script.
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            ListAvailableServices.init();
+        });
+
+    h3 Available games
+    if (services.length>0)
+        table.table.table-striped.table-hover.table-condensed
+            thead
+                tr
+                    th  Game name
+                    th  Service name
+                    th  Description
+                    th  Author
+                    th  Estimated duration (h)
+            tbody
+                each service, i in services
+                    if (service.isPublished == true)
+                        tr
+                            td.col-lg-1
+                                d #{service.version}
+                            td.col-lg-2
+                                d #{service.label}
+                            td.col-lg-6
+                                d #{service.description}
+                            td.col-lg-1
+                                d #{service.user.username}
+                            td.col-lg-2
+                                d.estimatedDuration #{service.estimatedDuration}
+                            td(style="display: none;")
+                                d.maxSpeedUp #{service.maxSpeedUp}
+                            td(style="display: none;")
+                                d.serviceId #{service._id}
+                            td(style="display: none;")
+                                d.additionalInfo #{service.additionalInfo}
+                            td
+                                a(href="javascript:void(0);", onclick="ListAvailableServices.openAdditionalInfoDialog(this.parentNode.parentNode)").btn.btn-info.btn-xs &nbsp;Info&nbsp;
+                            td
+                                a(href="javascript:void(0);", onclick="ListAvailableServices.openRunServiceDialog(this.parentNode.parentNode)").btn.btn-success.btn-xs &nbsp;Run&nbsp;
+
+    #runServiceDialogForm(title='Run service')
+        form(role='form', action='/player/games/create', method='post')#dialog
+            input(name="service", style="display: none")#service_id
+            input(name="isTimeBased" type="checkbox" id="TimeToTurnBasedSwitch" data-toggle="toggle" data-on="Time" data-off="Turn" data-onstyle="default" data-offstyle="default" onchange="ListAvailableServices.timeToTurnBasedSwitched(this.parentNode)")
+            div.speed
+                br
+                label Speed up
+                br
+                input.form-control(name='speed' type="range" min="1" value="1")#speedUpDialog
+            div.speed
+                br
+                div#estimatedDurationDialog
+                div(style="display: none")#estimatedDurationNumber
+            br
+            input(type='submit', value='Submit').btn.btn-primary.pull-right
+
+    #additionalInfoForm(title='Detail information')
+        div(style="height: 400px;")#quillContainer.hide-toolbar

@@ -1,0 +1,41 @@
+extends ../index/layout
+
+block content
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+
+    h3 Played games
+    if (games.length>0)
+        table.table.table-striped.table-condensed.table-hover
+            thead
+                th.col-lg-2  Game name
+                th.col-lg-2  Service name
+                th.col-lg-6  Description
+                th.col-lg-1  Author
+                th.col-lg-1  Type
+                th.col-lg-2  
+            tbody
+                each game, i in games
+                    tr
+                        td.col-lg-2
+                            d #{game.service.version}
+                        td.col-lg-2
+                            d #{game.service.label}
+                        td.col-lg-6
+                            d #{game.service.description}
+                        td.col-lg-1
+                            d #{game.service.user.username}
+                        td.col-lg-1
+                            if (game.isTimeBased)
+                                a(data-toggle="tooltip" title="Real or speed up time")
+                                    img.className#IdName(src="/img/time.png" alt="Image Title" style="width:20px")
+                        td.col-lg-2
+                            if (game.isFinished)
+                                a(href="/player/games/detail/" + game._id).btn.btn-default.btn-xs &nbsp;&nbsp;&nbsp;Finished&nbsp;&nbsp;&nbsp;
+                            else
+                                if (game.isDown == false)
+                                    a(href="/player/games/detail/" + game._id).btn.btn-success.btn-xs &nbsp;Running&nbsp;&nbsp;
+                                        i.fa.fa-refresh.fa-spin
+                                else
+                                    a(href="/player/games/detail/" + game._id data-toggle="tooltip" title="Service is down!").btn.btn-danger.btn-xs &nbsp;Running&nbsp;&nbsp;
+                                        i.fa.fa-refresh.fa-spin
+

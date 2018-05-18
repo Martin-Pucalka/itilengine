@@ -1,0 +1,20 @@
+extends ../index/layout
+
+block content
+    form(role='form', action='/users/update/#{user._id}', method='post').form-signin
+        h1 #{user.username}
+        .form-group
+            label Email address
+            input.form-control(type='email', name='email', id='inputEmail', value="#{user.email}", required, autofocus)
+        .form-group
+            label.checkbox-inline
+                if user.sendEmailNotifications
+                    input(type='checkbox', name='sendEmailNotifications', checked='checked')
+                    | Sent notifications about tickets
+                else
+                    input(type='checkbox', name='sendEmailNotifications')
+                    | Sent notifications about tickets
+        if (saved)
+            div.alert.alert-success
+                strong Saved
+        button.btn.btn-lg.btn-primary.btn-block(type='submit') Save

@@ -1,0 +1,120 @@
+div(style="width:100%;")#serviceInfrastructureDiv
+    table#serviceTable.table.table-condensed.attsTable.table-borderless.table-responsive
+        tbody
+            tr
+                input.form-control(name='id', value='#{service._id}', type="hidden")#id
+            tr
+                td
+                    strong
+                        d Name
+                td
+                    input.input-sm.form-control(name='label', value='#{service.label}', onblur="ServiceInfrastructure.updateService()")#label
+            tr
+                td
+                    strong
+                        d Description
+                td
+                    textarea#description.form-control.input-sm(name="description", maxlength="200", cols="40", rows="5", onblur="ServiceInfrastructure.updateService()", style="resize:none")
+                        | #{service.description}
+            tr
+                td
+                    strong
+                        d Estimated duration (hours)
+                td
+                    input.input-sm.form-control(name='estimatedDuration', value='#{service.estimatedDuration}', onblur="ServiceInfrastructure.updateService()", type="number")#estimatedDuration
+            tr
+                td
+                    strong
+                        d Max. speed up
+                td
+                    input.input-sm.form-control(name='speedUp', value='#{service.maxSpeedUp}', onblur="ServiceInfrastructure.updateService()", type="number", min="1", max="1000")#maxSpeedUp
+            tr
+                td
+                    button(onclick="ServiceInfrastructure.additionalInfoDialog.dialog('open')").btn.btn-default.btn-sm Additional info
+            tr
+                td(colspan="2")
+                    strong
+                        p Attributes
+                    table.table.table-condensed.rounded
+                        thead
+                            tr
+                                th.col-xs-6 Name 
+                                th.col-xs-3 Initial value
+                                th.col-xs-2 Unit
+                                th.col-xs-1
+                        tbody.attributeContainer
+                            each attr, i in attributesOfService
+                                tr(id="#{attr._id}")
+                                    td
+                                        input.input-sm.form-control(name='name', onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)", value="#{attr.name}").name
+                                    td
+                                        input.input-sm.form-control(name='initValue', type="number", onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)", value="#{attr.initValue}").initValue
+                                    td
+                                        input.input-sm.form-control(name='unit', onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)", value="#{attr.unit}").unit
+                                    td
+                                        a(href='#', onclick="ServiceInfrastructure.removeAttribute(this.parentNode.parentNode);").btn.btn-default.btn-sm Remove
+                    input.input-sm(value='Add', type="submit", onclick="ServiceInfrastructure.addAttributeToService(this.parentNode);").btn.btn-default.btn-sm
+
+    div#ciheader
+        div#serviceInfrastructureWorkflowContainer.rounded
+        input.input-sm(value='Add configuration item', type="submit", onclick="ServiceInfrastructure.addCi('New CI')").btn.btn-default.btn-sm
+        input.form-control(name='serviceInfrastructure', type="hidden", value='#{serviceInfrastructure}')#serviceInfrastructure
+    div#cicontainer
+        each ci, i in configurationItemsOfService
+            table(id='#{ci.ciid}').ci.table.table-condensed.attsTable.table-borderless.table-responsive
+                tbody
+                    tr(style="display: none;")
+                        td
+                            input.form-control(name='ci_id', type="hidden", value='#{ci._id}').ci_id
+                    tr(style="display: none;")
+                        td
+                            input.form-control(name='ciid', type="hidden", value='#{ci.ciid}').ciid
+                    tr
+                        td
+                            strong
+                                d Name
+                        td(colspan="2")
+                            input.input-sm.form-control(name='ciLabel', onblur="ServiceInfrastructure.updateCi(this.parentNode.parentNode.parentNode)", value='#{ci.label}').ciLabel
+                    tr
+                        td
+                            strong
+                                d Description
+                        td(colspan="2")
+                            textarea#description.input-sm.form-control(name="ciDescription", cols="40", rows="5", maxlength="200", onblur="ServiceInfrastructure.updateCi(this.parentNode.parentNode.parentNode)", style="resize:none").ciDescription
+                                | #{ci.description}
+                    tr
+                        td
+                            strong
+                                d Icon
+                        td
+                            form
+                                table
+                                    tr
+                                        td
+                                            input#csv(name='csv', type='file', onchange="ServiceInfrastructure.previewFile(this.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode)").fileinput
+                                    td
+                                        img(height="200", alt="Image", src="#{ci.img}", style="max-width: 50px;max-height: 50px;").icon
+                    tr
+                        td(colspan="3")
+                            strong
+                                p Attributes
+                            table.table.table-condensed.rounded
+                                thead
+                                    tr
+                                        th.col-xs-6 Name 
+                                        th.col-xs-3 Init Value
+                                        th.col-xs-2 Unit
+                                        th.col-xs-1 
+                                tbody.attributeContainer
+                                    each ciAttr, i in ci.atts
+                                        tr(id="#{ciAttr._id}")
+                                            td
+                                                input.input-sm.form-control(name='name', onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)", value="#{ciAttr.name}").name
+                                            td
+                                                input.input-sm.form-control(name='initValue', type="number", onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)", value="#{ciAttr.initValue}").initValue
+                                            td
+                                                input.input-sm.form-control(name='unit', onblur="ServiceInfrastructure.updateAttribute(this.parentNode.parentNode)", value="#{ciAttr.unit}").unit
+                                            td
+                                                a(href='#', onclick="ServiceInfrastructure.removeAttribute(this.parentNode.parentNode);").btn.btn-default.btn-sm Remove
+                            input.input-sm(value='Add', type="submit", onclick="ServiceInfrastructure.addAttributeToCi(this.parentNode.parentNode.parentNode.parentNode);").btn.btn-default.btn-sm
+include serviceInfrastructureTables   

@@ -1,0 +1,42 @@
+extends ../index/layout
+
+block content
+    script(src="https://code.jquery.com/jquery-1.12.4.js")
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    script(src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js")
+    link(rel='stylesheet', href='https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css')
+
+    h3 Created games
+    if (services.length>0)
+        table.table.table-striped.table-hover.table-condensed
+            thead
+                th.col-lg-2  Game name
+                th.col-lg-2  Service name
+                th.col-lg-5  Description
+                th.col-lg-2  Created
+                th  
+                th   
+                th  
+            tbody
+                each service, i in services
+                    if (service.isPublished == true)
+                        tr
+                            td
+                                d #{service.version}
+                            td
+                                d #{service.label}
+                            td
+                                d #{service.description}
+                            td 
+                                d #{moment(service.published).format('DD.MM. YYYY HH:mm')}  
+                            //- td
+                            //-     a(href='/creator/services/edit/'+service._id) Detail
+                            td
+                                a(href='/creator/services/stats/'+ service._id).btn.btn-info.btn-xs Stats
+                            td
+                                if service.isDisabled
+                                    a(href='/creator/services/updatePermissions/'+ service._id + "?isDisabled=false").btn.btn-warning.btn-xs Disabled
+                                else
+                                    a(href='/creator/services/updatePermissions/'+ service._id + "?isDisabled=true").btn.btn-success.btn-xs Enabled&nbsp;
+

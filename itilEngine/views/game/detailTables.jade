@@ -1,0 +1,64 @@
+
+d#additionalInfoContent(style="display: none") #{game.service.additionalInfo}
+#additionalInfoForm(title='Detail information')
+    div(style="height: 400px;")#quillContainer.hide-toolbar
+
+table(style="display: none;").table.table-condensed
+    thead
+        tr
+            th
+            th
+            th
+    tbody.attributeContainer
+        tr#attsTableSchema
+            td.col-xs-7
+                strong
+                    d.name
+            td.col-xs-3
+                d.value
+            td.col-xs-2
+                d.unit
+
+table(style="display: none")
+    thead
+        th(style="display: none")  game._id
+        th(style="display: none")  Game
+        th(style="display: none")  Service
+        th  Time
+        th  Type
+        th(style="display: none")  Subject
+        th(style="display: none")  Description
+        th(style="display: none")  Priority
+        th
+        th  Status
+        th(style="display: none")   ticket.selectedSolution
+        th(style="display: none")   ticket.solved
+        th(style="display: none")  ticket.state.solutions
+    tbody
+        tr(style="display: none")#ticketRow
+            td(style="display: none")
+                d.game_id
+            td(style="display: none")
+                d.gameVersion 
+            td(style="display: none")
+                d.serviceLabel
+            td
+                d.created
+            td
+                d.type
+            td(style="display: none") 
+                d.subject
+            td(style="display: none")
+                d.description 
+            td(style="display: none")
+                d.priority
+            td
+                d.isBlocking
+            td
+                a(href="javascript:void(0);", onclick="ServiceDeskTable.showTicketDialog(this.parentNode.parentNode)").status
+            td(style="display: none")
+                d.selectedSolution
+            td(style="display: none")
+                d.solved
+            td(style="display: none")
+                div.solutions

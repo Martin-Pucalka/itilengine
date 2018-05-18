@@ -1,0 +1,40 @@
+extends ../index/layout
+
+block extraHeader
+    script.
+      mxBasePath = '/lib/mxgraph/src';               
+    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    script(type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js")
+    script(type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    script(src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js")
+    link(rel='stylesheet', href='https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css')
+    script(src='https://cdn.quilljs.com/1.0.0/quill.js')
+    link(href='https://cdn.quilljs.com/1.0.0/quill.snow.css', rel='stylesheet')
+
+
+block content  
+    script(type="text/javascript" src="/lib/mxgraph/src/js/mxClient.js")
+    script(type="text/javascript" src="/javascripts/Utils.js")
+    script(type="text/javascript" src="/javascripts/ServiceInfrastructure.js")
+    script(type="text/javascript" src="/javascripts/ServiceWorkflow.js")
+    script(type="text/javascript" src="/javascripts/WorkflowValidation.js")
+  
+    script.
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            ServiceInfrastructure.main(document.getElementById('serviceInfrastructureWorkflowContainer'));
+            ServiceWorkflow.main(document.getElementById('serviceWorkflowContainer'));
+            ServiceInfrastructure.init();
+            ServiceWorkflow.init();
+            ServiceInfrastructure.showInfrastructure();
+        });
+        
+    h3#serviceLabelHeadline #{service.label}
+    div#infSwitch
+        span#infrastructureBehaviourSwitchWrapper
+            input(id="infrastructureBehaviourSwitch" type="checkbox" data-toggle="toggle" data-on="Behaviour" data-off="Infrastructure" data-onstyle="default" data-offstyle="default")
+    
+
+    include serviceInfrastructure   
+    
+    include serviceWorkflow
+    

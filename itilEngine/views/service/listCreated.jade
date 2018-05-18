@@ -1,0 +1,50 @@
+extends ../index/layout
+
+block content
+    script(src="https://code.jquery.com/jquery-1.12.4.js")
+    script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.js")
+    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    script(src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js")
+    link(rel='stylesheet', href='https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css')
+    script(type="text/javascript", src="/javascripts/ListCreatedServices.js")
+    script.
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            ListCreatedServices.init();
+        });
+
+    h3 Created services
+    input(type="submit", value='Create new', onclick="ListCreatedServices.newServiceDialog.dialog('open')").btn.btn-success
+    if (services.length>0)
+        table.table.table-striped.table-hover.table-condensed
+            thead
+                th.col-lg-2  Service name
+                th.col-lg-8  Description
+                th.col-lg-2  Created
+                th
+                td
+                th  
+            tbody
+                each service, i in services
+                    if (service.isPublished == false)
+                        tr
+                            td.col-lg-2
+                                d #{service.label}
+                            td.col-lg-8
+                                d #{service.description}
+                            td.col-lg-2 #{moment(service.created).format('DD.MM. YYYY HH:mm')}  
+                            td.col-lg-1
+                                a(href='/creator/services/edit/'+service._id).btn.btn-primary.btn-xs &nbsp;Edit&nbsp;
+                            td.col-lg-1
+                                a(href='/creator/services/delete/'+service._id).btn.btn-danger.btn-xs Delete
+
+    #newServiceDialogForm(title='Create new service')
+        form(role='form', action='/creator/services/save', method='post')
+            fieldset
+                label Name
+                br
+                input(type='text', name='label', value='My new service').text.ui-widget-content.ui-corner-all.input
+            br
+            input(type='submit' value='Create').btn.btn-primary.pull-right
+
+                
+
