@@ -6,7 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^2.6.4",
     "body-parser": "~1.18.2",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
